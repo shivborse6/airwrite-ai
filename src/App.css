@@ -1,0 +1,51 @@
+:root {
+  --bg: #eef1f5; --panel: #ffffff; --ink: #14213d; --muted: #5b6577; --line: #d9dee7;
+  --accent: #0f766e; --accent-ink: #ffffff; --good: #16a34a; --warn: #d97706; --bad: #dc2626; --busy: #2563eb;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0e1420; --panel: #161e2e; --ink: #e8edf6; --muted: #93a0b5; --line: #26324a; --accent: #2dd4bf; --accent-ink: #052e2b; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Instrument Sans', system-ui, sans-serif; line-height: 1.5; }
+.app { max-width: 1280px; margin: 0 auto; padding: 28px 24px 40px; }
+.top h1 { font: 500 2.1rem 'Newsreader', Georgia, serif; margin: 0; letter-spacing: -0.01em; }
+.top p { margin: 4px 0 20px; color: var(--muted); }
+
+.status { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+.status-item { display: flex; gap: 10px; align-items: flex-start; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.status-label { font-size: .78rem; color: var(--muted); }
+.status-value { font-size: .92rem; font-weight: 500; overflow-wrap: anywhere; }
+.dot { width: 9px; height: 9px; border-radius: 50%; margin-top: 7px; flex: none; background: var(--line); }
+.dot-good { background: var(--good); } .dot-warn { background: var(--warn); } .dot-bad { background: var(--bad); }
+.dot-busy { background: var(--busy); animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .35; } }
+
+.grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+
+.stage { position: relative; aspect-ratio: 16 / 9; background: #0b1220; border-radius: 10px; overflow: hidden; }
+.video, .overlay { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.video { transform: scaleX(-1); } /* mirror like a real mirror; the overlay is already drawn in mirrored space */
+.stage-empty { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 24px; color: #9fb0c9; }
+
+.actions { display: flex; gap: 10px; margin-top: 14px; } .actions.wrap { flex-wrap: wrap; }
+.btn { font: inherit; font-weight: 500; padding: 9px 16px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer; }
+.btn:hover:not(:disabled) { border-color: var(--muted); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.btn-primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn-dark { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.btn-quiet { color: var(--bad); }
+
+.banner-error { margin-top: 12px; padding: 10px 12px; border-radius: 8px; background: rgba(220,38,38,.1); color: var(--bad); border: 1px solid rgba(220,38,38,.3); font-size: .92rem; }
+.gestures { list-style: none; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; color: var(--muted); font-size: .88rem; }
+.gestures b { display: block; color: var(--ink); font-weight: 600; }
+
+.editor-head { display: flex; align-items: center; justify-content: space-between; }
+.editor h2 { margin: 0 0 10px; font-size: 1rem; font-weight: 600; }
+.editor textarea { width: 100%; min-height: 340px; resize: vertical; padding: 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: 400 1.3rem/1.5 'Newsreader', Georgia, serif; }
+.spinner { width: 18px; height: 18px; border: 2px solid var(--line); border-top-color: var(--busy); border-radius: 50%; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 1000px) { .grid { grid-template-columns: 1fr; } .status { grid-template-columns: 1fr 1fr; } }
+@media (prefers-reduced-motion: reduce) { .dot-busy, .spinner { animation: none; } }
